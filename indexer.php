@@ -99,4 +99,3 @@ class indexator {
 		return $this->write_to_index($section_content_data['units_data'], $section_content_data['section_data']);
 	}
 }
-?>
