@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work!</title>
+<style>
+body {margin:0; font-family:"Myriad Pro"; font-size:12px; background-color:#ccc; }
+
+#container {max-width:595px; margin:auto; background-color:#fff; text-align:center; padding-bottom:50px;}
+
+header {position:relative; margin-bottom:62px;}
+header img {width:100%}
+header h1 {font-size:3.42em; color:#fff; position:absolute; left:38px; bottom:15px;}
+
+.tbl_cover {width:404px; margin:auto; height:404px; background-color:#90c4b8;}
+table {border-collapse:collapse; transition:all 0.5s ease; width:100%; height:100%;}
+table td {border:solid 1px #fff; width:25%; height:25%;}
+table td:hover {background-color:#6dab9d;}
+
+#time {font-size:3.42em; text-align:center; margin:38px 0;}
+
+button {border:none; background-color:#e8e8e8; font-size:3.41em; width:404px; padding:32px 0; margin:0 auto 34px; outline:none;}
+button:hover {background-color:#d9d9d9; }
+button:active {position:relative; top:1px; left:1px;}
+
+#result {background-color:#e8e8e8; width:100%; padding:30px 0 25px 0; margin-top:56px;}
+canvas {height:214px; width:300px; transition:all 0.5s ease; position:relative; opacity:0; transform:rotate(1000deg);}
+
+
+@media screen and (max-width:450px){
+	.common_w_size {width:300px;}
+	.common_h_size {height:300px;}
+	
+}
+@media only screen and (min-width:451px){
+	.common_w_size {width:404px;}
+	.common_h_size {height:404px;}
+}
+</style>
+
+<script>
+function ready(){
+	var pointer = {
+		cellbox: document.getElementById('tbl'),
+		clock: document.getElementById('time'),
+		buttons: document.getElementsByTagName('button'),
+		cW: [[],[],[],[]],
+		rotateDeg: 0,
+		timeId: 0,
+		workSeconds: 0,
+		strSeconds: '00',
+		strMinutes: '00',
+		cellCount: 0,
+	
+		defineEvents: function(){
+			this.clicker();
+			this.rotate();
+			this.stopTimer();
+		},
+		
+		clicker: function(e){
+			this.cellbox.onclick = function(e){
+				var rowNum  = e.target.parentElement.rowIndex;
+				var cellNum = e.target.cellIndex;
+				pointer.cW[rowNum][cellNum] = pointer.cW[rowNum][cellNum] == undefined ? 1 : undefined;
+				if(pointer.cW[rowNum][cellNum] != undefined){
+					e.target.style.backgroundColor = "#000";
+					pointer.cellCount++;	
+				}else{
+					e.target.style.backgroundColor = "";
+					pointer.cellCount--;
+				}
+				if(!pointer.timeId){
+					pointer.timer();
+				}
+			}
+		},
+		
+		rotate: function(){
+			this.buttons[0].onclick = function(){
+				pointer.rotateDeg += 90;
+				pointer.cellbox.style.transform = 'rotate('+pointer.rotateDeg+'deg)';
+			}	
+		},
+		
+		timer: function(){
+			if(!this.timeId){
+				this.timeId = setInterval(function(){
+						pointer.timer(pointer.workSeconds)
+					}, 1000);		
+			}else{
+				this.workSeconds++;	
+			}
+			var minuts = Math.floor(this.workSeconds / 60);
+			this.strMinutes = (minuts < 10 ? '0' : '') + minuts;
+			var seconds = this.workSeconds - minuts * 60;
+			this.strSeconds = (seconds < 10 ? '0' : '') + seconds;
+			this.clock.childNodes[3].innerHTML = this.strMinutes;
+			this.clock.childNodes[5].innerHTML = this.strSeconds;
+	
+		},
+		
+		stopTimer: function(){
+			this.buttons[1].onclick = function(){
+				clearInterval(pointer.timeId); 
+				pointer.timeId = 0;
+				pointer.pointImage();
+			}
+		},
+		
+		pointImage: function(){
+			var canvas = document.getElementById("canvas");
+			canvas.style.opacity = 1;
+			canvas.style.transform = 'rotate(0deg)';
+			var ctx = canvas.getContext("2d");
+			console.log(document.getElementsByTagName('canvas'));
+			canvas.height = canvas.clientHeight;
+			canvas.width = canvas.clientWidth;
+			// Text 
+			ctx.font = "3.42em Myriad Pro";
+			ctx.textAlign = 'center'
+			ctx.fillText("Пикселей: "+this.cellCount, 150, 152);
+			ctx.fillText("Время: "+this.strMinutes+":"+this.strSeconds+"", 150, 200);
+			// Box rotate
+			ctx.translate(150, 50);
+			ctx.rotate((Math.PI / 180) * this.rotateDeg);
+			ctx.translate(-150, -50);
+			// Box
+			ctx.fillStyle = "#90c4b8";
+			ctx.strokeStyle = "#90c4b8";
+			ctx.fillRect(100,0,100,100);
+			ctx.fillStyle = "#000";
+			// Grid
+			ctx.beginPath();
+			ctx.strokeStyle = "#c2dbd8";
+			ctx.moveTo(100, 25);
+			ctx.lineTo(200, 25);
+			ctx.moveTo(100, 50);
+			ctx.lineTo(200, 50);
+			ctx.moveTo(100, 75);
+			ctx.lineTo(200, 75);
+			ctx.moveTo(125, 0);
+			ctx.lineTo(125, 100);
+			ctx.moveTo(150, 0);
+			ctx.lineTo(150, 100);
+			ctx.moveTo(175, 0);
+			ctx.lineTo(175, 100);
+			ctx.stroke();
+	
+			for(var i =0; i < pointer.cW.length; i++){
+				for(var j =0; j < pointer.cW[i].length; j++){
+					
+					if(pointer.cW[i][j] != undefined){
+						ctx.fillRect(100+25*j, 25*i,25,25);
+						ctx.strokeRect(100+25*j, 25*i,25,25);
+					}
+				}
+			}
+	
+		}
+	}
+	pointer.defineEvents();
+}
+document.addEventListener("DOMContentLoaded", ready);
+</script>
+</head>
+
+<body>
+
+<div id="container">
+	<header>
+    	<h1>Пиксель - Арт</h1>
+    	<img src="header.jpg" alt="">
+    </header>
+
+    <div class="tbl_cover common_w_size common_h_size">
+        <table id="tbl">
+            <tbody>
+                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="time">
+        Время:<br>
+        <span>00</span>:<span>00</span>
+    </div>
+
+    <button class="common_w_size">Повернуть</button>
+    <button class="common_w_size">Результат</button>
+    
+    <div id="result">
+        <canvas id="canvas"></canvas>
+    </div>
+
+</div>
+
+</body>
+</html>
