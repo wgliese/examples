@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+<style>
+html {height:100%;}
+body {height:100%; margin:0; font:12px Arial; position:relative;}
+input {outline:none;}
+.cover {position:absolute; top:0; bottom:0; left:0; right:0; width:320px; min-height:360px; padding:19px; margin:auto; background-color:#d8d8d8; box-sizing:border-box; transition: all 0.5s ease;}
+.cover > div {height:100px; position:relative; top:185px;}
+.cover > div h4 {margin:0 0 15px 0; font-size:1.5em;}
+.cover > div p {letter-spacing:1px;}
+.cover > p {position:absolute; bottom:5px; width:100%; left:0; font-size:0.85em; text-align:center;}
+#cardbox {width:100%; height:160px; padding:19px; box-sizing:border-box; font:1.15em "Courier New"; color:#2b2b2b; background-color:#ffffff; border:solid 1px #979797; border-radius:8px; position:relative; top:-100px;}
+#cardbox input {width:100%; padding:3px 10px; margin:32px 0 48px; box-sizing:inherit; font:inherit; border:inherit; color:inherit;}
+#cardbox input.error {border-color:#f00; box-shadow:0 0 5px #f00;}
+#cardbox input.ok {border-color:#090; box-shadow:0 0 5px #090;}
+
+@media screen and (max-width:400px){
+	.cover {width:100%; height:100%; font-size:1.2em;}
+	.cover > div {top:210px;}
+	#cardbox {height:180px;}
+}
+@media screen and (min-width:401px){
+	.cover {height:100%;}
+}
+@media screen and (min-height:500px) and (min-width:600px){
+	.cover {height:500px; /*max-height:568px;*/}
+}
+</style>
+
+
+<script>
+function LunaCheck(cardNumber){
+	var num, numStr, oddSum = 0, evenSum = 0;
+	for(var i = cardNumber.length - 1; i > -1; i--){
+		numStr = cardNumber.substr(i, 1);
+		num = +numStr;
+		if(isNaN(num) || numStr == ' ') return false;
+		if(i % 2 == 0){
+			num = num * 2;
+			evenSum += (num > 9) ? num - 9 : num;
+		}else{
+			oddSum += num;
+		}
+	}
+	return !((evenSum + oddSum) % 10 || (evenSum + oddSum) == 0);
+}
+
+
+document.addEventListener("DOMContentLoaded", 
+	function ready(){
+		var cardBox =  document.getElementById('cardbox');
+		var input = cardBox.childNodes[1];
+		var cardType = cardBox.childNodes[3];
+		var cardTypes = [];
+		cardTypes[4] = 'Visa';
+		cardTypes[5] = 'MasterCard';
+
+		input.onkeyup = function(){
+			var firstNum = +input.value.substr(0,1); 
+			if(input.value.length > 15){
+				input.className = (LunaCheck(input.value)) ? 'ok' : 'error';
+			}else{
+				input.className = '';
+			}
+			cardType.textContent = cardTypes[firstNum];
+		}
+		
+		input.onchange = function(){ //or onblur
+			input.className = (LunaCheck(input.value)) ? 'ok' : 'error';
+		}
+	}
+);
+</script>
+</head>
+
+<body>
+
+<div class="cover">
+    <div>
+        <h4>Оплата пластиковой картой</h4>
+        <p>Для проведения оплаты Вашей пластиковой картой введите её номер.</p>
+    </div>
+    <form action="" method="" id="cardbox" >
+        <input type="text" name="" value="">
+        <div></div>
+    </form>
+    <p>&copy; ECommPay 2016</p>
+</div>
+
+</body>
+</html>
