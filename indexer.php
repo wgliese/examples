@@ -19,16 +19,16 @@ class indexator {
 			foreach($current_index_rows as $row => $index){
 				if($index['unit_name'] == $unit['unit_name'] and $index['from_section'] == $section_data['from_section']){
 					$result = $this->db_operator->write_data("
-							UPDATE rm_index SET
-									categories = '".addslashes($unit['categories'])."',
-									unit_title = '".addslashes($unit['unit_title'])."',
-									description = '".addslashes($unit['unit_descr'])."',
-									last_update = '".$current_date."',
-									status_code = '".$unit['status_code']."'
-								WHERE unit_name ='".$index['unit_name']."'
-								AND from_section = '".$index['from_section']."'
-								LIMIT 1"
-							);
+						UPDATE rm_index SET
+								categories = '".addslashes($unit['categories'])."',
+								unit_title = '".addslashes($unit['unit_title'])."',
+								description = '".addslashes($unit['unit_descr'])."',
+								last_update = '".$current_date."',
+								status_code = '".$unit['status_code']."'
+							WHERE unit_name ='".$index['unit_name']."'
+							AND from_section = '".$index['from_section']."'
+							LIMIT 1"
+						);
 					if($result === true){
 						$report[$unit['unit_name']] = 'is writed!';
 					}else{
@@ -42,16 +42,16 @@ class indexator {
 			if($update == false){
 				$preview_image = intval(file_exists(BASE_DIR.IMAGE_DIR.'/'.$section_data['section_name'].'/preview/'.$unit['unit_name'].'.jpg'));	
 				$result = $this->db_operator->write_data("
-							INSERT INTO rm_index VALUES (
-									'',
-									'".$section_data['section_name']."',
-									'".addslashes($unit['unit_title'])."',
-									'".addslashes($unit['unit_descr'])."',
-									'".$current_date."',
-									".$preview_image.",
-									'".$unit['status_code']."'
-								)
-							");
+						INSERT INTO rm_index VALUES (
+								'',
+								'".$section_data['section_name']."',
+								'".addslashes($unit['unit_title'])."',
+								'".addslashes($unit['unit_descr'])."',
+								'".$current_date."',
+								".$preview_image.",
+								'".$unit['status_code']."'
+							)
+						");
 				if($result === true){
 					$report[$unit['unit_name']] = 'is writed!';
 				}else{
@@ -72,15 +72,15 @@ class indexator {
 			exit;	
 		}
 		$units_data = $this->db_operator->get_data("
-									SELECT unit_id AS unit_identifier, unit_name, unit_title, (
-										SELECT GROUP_CONCAT(CONCAT_WS('|', category_name, category_title) SEPARATOR ';')
-										FROM ".$section_data['section_name']."_categories WHERE category_id IN (
-											SELECT category_id
-											FROM ".$section_data['section_name']."_units_relativity
-											WHERE unit_id = unit_identifier
-										)
-									) AS categories, unit_descr, status_code
-									FROM ".$section_data['section_name']."_units");
+					SELECT unit_id AS unit_identifier, unit_name, unit_title, (
+						SELECT GROUP_CONCAT(CONCAT_WS('|', category_name, category_title) SEPARATOR ';')
+						FROM ".$section_data['section_name']."_categories WHERE category_id IN (
+							SELECT category_id
+							FROM ".$section_data['section_name']."_units_relativity
+							WHERE unit_id = unit_identifier
+						)
+					) AS categories, unit_descr, status_code
+					FROM ".$section_data['section_name']."_units");
 
 		return array(
 					'section_data' => $section_data,
