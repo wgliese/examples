@@ -1,0 +1,101 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:200,400,500,700,300&subset=latin,cyrillic-ext,cyrillic,latin-ext);
+* {margin:0; box-sizing:border-box;}
+body { font-family:Roboto, Arial; font-size:12px; background-color:#f2f2f2;}
+h1 {color:#323232; font-size:1.6em; font-weight:400; text-transform:uppercase;}
+h2 {font-size:1.6em; font-weight:400; text-transform:uppercase;}
+h3 {color:#323232; font-weight:500; font-size:1.47em;}
+b {font-weight:500;}
+
+
+.icons {display:inline-block; width:24px; height:24px; background:url(icons.png) no-repeat; vertical-align:middle; position:relative; margin-top:-2px;}
+.icons.user {background-position: -5px -38px;}
+.icons.info {background-position: -70px -134px;}
+.icons.refresh {background-position: -36px -37px;}
+.icons.add {background-position: -70px -36px;}
+.icons.awaiting {background-position: -5px -5px;}
+.icons.inwork {background-position: -35px -5px;}
+.icons.sended {background-position: -68px -5px;}
+.icons.deffect {background-position: -5px -104px;}
+.icons.cart {background-position: -34px -103px;}
+.icons.warning {background-position: -4px -69px;}
+.icons.arrow {background-position: -38px -69px;}
+.icons.ok {background-position: -69px -69px;}
+.icons.added {background-position: -69px -102px;}
+.icons.manager {background-position: -5px -134px;}
+.icons.comment {background-position: -37px -132px;}
+
+header {font-weight:200; font-size:1.33em;}
+header > div:first-child {background-color:#1868a7;}
+header .logo {padding:21px 0 0 13px; width:190px; float:left;}
+header .logo * {vertical-align:top; line-height:22px;}
+header .logo span {color:#ffffff; font-size:1.25em; margin-left:27px;}
+header .profile {float:right; color:#ffffff; height:64px; padding:23px 17px 0;}
+header nav a {color:#ffffff; display:block; height:64px; padding:23px 17px 0; text-decoration:none;}
+header nav a:hover, header nav a.active {background-color:#08436d;}
+header nav a.active {font-weight:500;}
+header > div:last-child {background-color:#ffffff; box-shadow:0 0 2px #595959; clear:both;}
+header div > a {color:#246293; display:block; float:left; border-bottom:solid 2px #fff; text-decoration:none;}
+header div > a:hover, header div > a.active {border-color:#246293;}  
+header div > a.active {font-weight:500;}  
+
+
+#content h1 {padding:17px 17px 0;}
+#content .buttons {padding:0 17px;}
+#content a.button {background-color:#1867a9; color:#fff; display:inline-block; text-decoration:none; white-space:nowrap;}
+#content a.button:hover {opacity:0.8;}
+#content .buttons {margin:15px 0;}
+#content .buttons a {padding:11px 15px; font-size:1.62em; width:220px; margin-right:5px;}
+#content .buttons .icons {margin-right:10px;}
+
+.details {padding:0 10px;}
+
+.details section h2 {color:#ffffff; padding:14px;}
+.details section h2 span {margin-right:13px;}
+.details .awaiting h2,
+.details .awaiting h3 span {background-color:#8887c3;}
+.details .inwork h2,
+.details .inwork h3 span {background-color:#e4bb00;}
+.details .sended h2,
+.details .sended h3 span {background-color:#64c746;}
+.details section > div {background-color:#ffffff; padding:15px 15px 0 15px; margin:8px 0;}
+.details section h3 span {display:inline-block; overflow:hidden; border-radius:9px; width:18px; height:18px; vertical-align:middle; margin-bottom:2px; margin-right:11px;}
+.details section .states {border-bottom:solid 1px #000;}
+.details section .states .icons {margin-right:7px;}
+.details section .states > b {color:#323232; display:inline-block; margin:16px 59px 10px 0; font-size:1.3em;}
+.details section .states > b + b {color:#595959; margin-right:0;}
+.details section .info {font-size:1.16em; padding-top:10px;}
+.details section .info .icons {margin-right:7px;}
+.details section .info > span {display:inline-block; margin:8px 0 5px; white-space:nowrap; color:#656565;} 
+.details section .info > span:first-child {float:left; margin-right:32px;}
+.details section .info > span + span + span {clear:both;}
+.details section .info .spacer {display:inline-block; width:24px; height:24px; margin-right:7px; border-left:solid 1px #323232; vertical-align:middle; position:relative; margin-top:-2px;}
+.details section .info p {margin:0 0 5px 31px; font-size:1.06em;}
+.details section .actions {padding-top:7px;}
+.details section .actions a:first-child {padding:15px 36px; font-size:1.62em; margin-right:17px; vertical-align:middle;}
+.details section .actions a + a,
+.details section .actions span {color:#595959; font-size:1.29em; font-weight:500; margin:9px 0; display:inline-block; vertical-align:middle; }
+.details section .actions a + a:hover {color:#f00;}
+
+
+@media screen and (max-width:780px){
+	header nav {background-color:#1868a7; border-top:none;}
+	header nav a {clear:both; width:100%; background-color:#257cb5; border-top:solid 1px #062842;}
+	header div > a {float:none; background-color:#fff; height:36px; padding:9px 10px 0;}
+	.details section {margin-top:20px;}
+}
+
+@media screen and (min-width:781px){
+	header > div:first-child {height:64px;}
+	header > div:last-child {height:64px; padding:0 17px;}
+	header nav {clear:both; background-color:#257cb5; width:100%; height:64px; border-top:solid 1px #062842;}
+	header nav a {float:left; background-color:#257cb5;}
+	header div > a {margin-top:17px; height:30px; padding:5px 10px 0;}
+	.details section {float:left; width:33.3%; padding:0 7px;}
+}
+
+@media screen and (min-width:1061px){
+	header .profile div {width:250px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;}
+	header nav {margin-left:18%; clear:none; background-color:#1868a7; border:none;}
+	header nav a {float:left; background-color:#1868a7;}
+}
+
